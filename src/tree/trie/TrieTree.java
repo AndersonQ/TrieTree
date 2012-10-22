@@ -50,7 +50,7 @@ public class TrieTree {
 		return nodes;
 	}
 	
-	private TrieTree getNodes(int i) {
+	private TrieTree getNode(int i) {
 		if(nodes[i] == null)
 		{
 			nodes[i] = new TrieTree();
@@ -58,7 +58,7 @@ public class TrieTree {
 		return nodes[i];
 	}
 	
-	private TrieTree getNodes(char c) {
+	private TrieTree getNode(char c) {
 		if(nodes[c -97] == null)
 		{
 			nodes[c - 97] = new TrieTree();
@@ -70,11 +70,11 @@ public class TrieTree {
 		this.nodes = node;
 	}
 	
-	private void setNodes(TrieTree node, int i) {
+	private void setNode(TrieTree node, int i) {
 		this.nodes[i] = node;
 	}
 	
-	private void setNodes(TrieTree node, char c) {
+	private void setNode(TrieTree node, char c) {
 		this.nodes[c - 97] = node;
 	}
 
@@ -151,10 +151,10 @@ public class TrieTree {
 		if(pos < key.length()) //tinha -1
 		{
 			char c = key.charAt(pos);
-			if(no.getNodes(c) != null)
+			if(no.getNode(c) != null)
 			{
 				this.tmp = no;
-				return search(key, no.getNodes(c), ++pos);
+				return search(key, no.getNode(c), ++pos);
 			}
 		}
 		//Last character of key is a final node, key found!
@@ -257,8 +257,8 @@ public class TrieTree {
 			for(int i = pos; i < key.length(); i++)
 			{
 				char j = key.charAt(i);
-				tmp.setNodes(new TrieTree(tmp), j);
-				tmp = tmp.getNodes(j);
+				tmp.setNode(new TrieTree(tmp), j);
+				tmp = tmp.getNode(j);
 			}
 			//Set the last node as final node
 			tmp.setFinish(true);
