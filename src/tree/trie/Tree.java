@@ -15,10 +15,10 @@ public class Tree {
 		tree.insert("abc");
 		//tree.insert("Anderson");
 		//tree.insert("Fernando");
-		tree.insert("Liege");
+		//tree.insert("Liege");
 		//tree.insert("Tiago");
 		tree.print();
-		tree.remove("abc");
+		//tree.remove("abc");
 		
 		while(c)
 		{

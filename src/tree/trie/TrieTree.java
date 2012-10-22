@@ -42,6 +42,7 @@ public class TrieTree {
 			{
 				//Killing the child *_*
 				nodes[goingToDie] = null;
+				return;
 			}
 		}
 	}
@@ -53,7 +54,8 @@ public class TrieTree {
 	private TrieTree getNode(int i) {
 		if(nodes[i] == null)
 		{
-			nodes[i] = new TrieTree();
+			System.out.println("Creating a node int");
+			//nodes[i] = new TrieTree();
 		}
 		return nodes[i];
 	}
@@ -61,7 +63,8 @@ public class TrieTree {
 	private TrieTree getNode(char c) {
 		if(nodes[c -97] == null)
 		{
-			nodes[c - 97] = new TrieTree();
+			System.out.println("Creating a node char");
+			//nodes[c - 97] = new TrieTree();
 		}
 		return nodes[c - 97];
 	}
@@ -220,7 +223,6 @@ public class TrieTree {
 				System.out.println("seting a node null");
 				father.killMeFather(no.no);
 				remove(key, new Wrapper(father));
-				
 			}
 		}
 		System.out.println("Return finish!");
