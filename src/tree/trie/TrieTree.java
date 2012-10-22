@@ -28,6 +28,23 @@ public class TrieTree {
 		finish = false;
 		father = f;
 	}
+	
+	/**
+	 * Delete a child
+	 * A father killing his own child, amazing!
+	 * @param me a child to be killed
+	 */
+	private void killMeFather(TrieTree me)
+	{
+		for(int goingToDie = 0; goingToDie < 26; goingToDie++)
+		{
+			if(this.nodes[goingToDie] == me)
+			{
+				//Killing the child *_*
+				nodes[goingToDie] = null;
+			}
+		}
+	}
 
 	private TrieTree[] getNodes() {
 		return nodes;
@@ -85,6 +102,35 @@ public class TrieTree {
 		TrieTree.root = root;
 	}
 	
+	/**
+	 * Verify is a node is terminal and it has children
+	 * @return true or false
+	 */
+	private boolean hasMore()
+	{
+		for(int i = 0; i < 26; i++)
+		{
+			if (this.nodes[i] != null)
+			{
+				return (true && finish);
+			}
+		}
+		return false;	
+	}
+	
+	private int getNumberOfChildren()
+	{
+		int count = 0;
+		for(int i = 0; i < 26; i++)
+		{
+			if (this.nodes[i] != null)
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+	
 	public int search(String key)
 	{
 		this.ok = false;
@@ -133,7 +179,7 @@ public class TrieTree {
 	{
 		search(key);
 		
-		remove(key, new Wrapper(this.tmp));
+		tmp.remove(key, new Wrapper(this.tmp));
 		
 		return this.ok;
 	}
@@ -145,18 +191,40 @@ public class TrieTree {
 	 */
 	private void remove(String key, Wrapper no){
 		
-		TrieTree father = no.no.getFather();
-		
-		if(no.no.getNodes().length > 1)
+		//Break condition
+		if(no.no == null)
 		{
 			return;
 		}
-		else if(no.no.getNodes().length == 1)
-		{
-			no.no = null;
-			remove(key, new Wrapper(father));
-		}
 		
+		//If the node is final and is not a leaf
+		if(no.no.hasMore())
+		{
+			no.no.setFinish(false);
+			this.ok = true;
+			System.out.println("Return hasMore");
+			return;
+		}
+		//This node is a leaf
+		else
+		{
+			TrieTree father = no.no.getFather();
+			
+			if(no.no.getNumberOfChildren() > 1)
+			{
+				System.out.println("no.no.getNumberOfChildren(): " + no.no.getNumberOfChildren() );
+				return;
+			}
+			else //if(no.no.getNodes().length == 1)
+			{
+				System.out.println("seting a node null");
+				father.killMeFather(no.no);
+				remove(key, new Wrapper(father));
+				
+			}
+		}
+		System.out.println("Return finish!");
+		return;
 	}
 	/**
 	 * Insert a key in TrieTree
@@ -189,7 +257,7 @@ public class TrieTree {
 			for(int i = pos; i < key.length(); i++)
 			{
 				char j = key.charAt(i);
-				tmp.setNodes(new TrieTree(), j);
+				tmp.setNodes(new TrieTree(tmp), j);
 				tmp = tmp.getNodes(j);
 			}
 			//Set the last node as final node
@@ -266,7 +334,7 @@ public class TrieTree {
 	
 	/**
 	 * Prints the node
-	 */
+	 *
 	public String toString()
 	{
 		StringBuilder buff = new StringBuilder();
@@ -280,7 +348,7 @@ public class TrieTree {
 		}
 		
 		return buff.toString();
-	}
+	}*/
 	
 	/**
 	 * A Wrapper to make possible to modify received pointers 
@@ -293,6 +361,11 @@ public class TrieTree {
 		public Wrapper(TrieTree no)
 		{
 			this.no = no;
+		}
+		
+		public void setNull()
+		{
+			no = null;
 		}
 	}
 }

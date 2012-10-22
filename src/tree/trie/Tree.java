@@ -12,11 +12,13 @@ public class Tree {
 		int operation = Integer.MIN_VALUE;
 		boolean c = true;
 		
-		tree.insert("and");
+		tree.insert("abc");
 		//tree.insert("Anderson");
 		//tree.insert("Fernando");
 		tree.insert("Liege");
 		//tree.insert("Tiago");
+		tree.print();
+		tree.remove("abc");
 		
 		while(c)
 		{
