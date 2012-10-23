@@ -12,13 +12,13 @@ public class Tree {
 		int operation = Integer.MIN_VALUE;
 		boolean c = true;
 		
-		tree.insert("abc");
-		//tree.insert("Anderson");
-		//tree.insert("Fernando");
-		//tree.insert("Liege");
-		//tree.insert("Tiago");
+		tree.insert("Anderson");
+		tree.insert("Fernando");
+		tree.insert("Liege");
+		tree.insert("Tiago");
 		tree.print();
-		//tree.remove("abc");
+		
+		System.out.println("\n");
 		
 		while(c)
 		{
@@ -113,11 +113,14 @@ public class Tree {
 	private static void remove()
 	{
 		Scanner sc = new Scanner(System.in);
+		int ret;
 		String key;
 
 		System.out.println("Give me what you want to remove: ");
-		key = key = sc.next();
+		key = sc.next();
 		
-		System.out.println("Remotios was a "+ tree.remove(key));
+		ret = tree.remove(key);
+		
+		System.out.println("Remotios was a "+ (ret == key.length()));
 	}
 }
