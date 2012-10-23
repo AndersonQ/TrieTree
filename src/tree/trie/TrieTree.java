@@ -1,5 +1,7 @@
 package tree.trie;
 
+import java.util.Vector;
+
 public class TrieTree {
 	private TrieTree[] nodes;
 	private TrieTree father;
@@ -132,6 +134,65 @@ public class TrieTree {
 		return count;
 	}
 	
+	/**
+	 * Get the n first words with a prefix
+	 * @param prefix the prefix to search
+	 * @param n number of words to return
+	 * @return A vector with until n words. If it found less then n, 
+	 * it will return so much words as possible
+	 */
+	public Vector<String> getSuggestions(String prefix, int n)
+	{
+		search(prefix);
+		return this.getSuggestions(this.tmp, new StringBuilder(prefix), n, new Vector<String>());
+	}	
+	
+	/**
+	 * Recursively implementation of getSuggestions
+	 * @param no node after the prefix
+	 * @param buff a buffer to storage the string
+	 * @param n number of strings to search
+	 * @param suggestions a vector to storage the strings
+	 * @return
+	 */
+	private Vector<String> getSuggestions(TrieTree no, StringBuilder buff, int n, Vector<String> suggestions)
+	{
+		StringBuilder buff2 = new StringBuilder();
+		//Break condition
+		if(no == null || suggestions.size() == n)
+		{
+			return suggestions;
+		}
+				
+		TrieTree[] nos = no.getNodes();
+		
+		for(int i = 0; i < 26; i++)
+		{
+			if(suggestions.size() == n)
+			{
+				return suggestions;
+			}
+			//Initialize buff2 with the previous prefix
+			buff2.append(buff.toString());
+			if(nos[i] != null)
+			{
+				//Buffering the string
+				buff2.append(String.format("%c", 97 + i));
+				
+				if(nos[i].isFinish())
+				{
+					//System.out.println();
+					//System.out.print(buff2.toString());
+					suggestions.add(buff2.toString());
+				}
+				this.getSuggestions(nos[i], buff2, n, suggestions);
+			}
+			//Cleaning buff2 of deeper prefix
+			buff2 = new StringBuilder();
+		}
+		return suggestions;
+	}
+	
 	public int search(String key)
 	{
 		this.ok = false;
@@ -217,7 +278,7 @@ public class TrieTree {
 			
 			if(no.getNumberOfChildren() > 1)
 			{
-				System.out.println("no.no.getNumberOfChildren(): " + no.getNumberOfChildren() );
+				//System.out.println("no.no.getNumberOfChildren(): " + no.getNumberOfChildren() );
 				return;
 			}
 			else //if(no.no.getNodes().length == 1)
