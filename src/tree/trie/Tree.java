@@ -1,6 +1,7 @@
 package tree.trie;
 
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Tree {
 
@@ -12,22 +13,28 @@ public class Tree {
 		int operation = Integer.MIN_VALUE;
 		boolean c = true;
 		
+
+		System.out.print("Words in the tree:");
 		tree.insert("Anderson");
 		tree.insert("Fernando");
 		tree.insert("Liege");
 		tree.insert("Tiago");
+		for(int i = 0; i < 10; i++)
+		{
+			String key = String.format("%s%c", "UFABC", (97 + i));
+			tree.insert(key);
+		}
 		tree.print();
-		
-		System.out.println("\n");
-		
+				
 		while(c)
 		{
 			System.out.printf("What do you want?\n");
 			System.out.printf("0 - Add new key\n");
 			System.out.printf("1 - Search a key\n");
 			System.out.printf("2 - Remove\n");
-			System.out.printf("3 - Print tree\n");
-			System.out.printf("4 - Exit\n");
+			System.out.printf("3 - Get words words with a prefix chosen\n");
+			System.out.printf("4 - Print tree\n");
+			System.out.printf("5 - Exit\n");
 			System.out.printf("Option: ");
 			operation = sc.nextInt();
 					
@@ -43,6 +50,8 @@ public class Tree {
 					remove();
 					break;
 				case 3:
+					getSuggestions();
+				case 4:
 					tree.print();
 					System.out.println();
 					break;
@@ -105,8 +114,8 @@ public class Tree {
 		else
 		{
 			System.out.println("Key NOT found!");
-			System.out.println("ret = " + ret);
-			System.out.println("key = " + key + " length = " + key.length());
+			//System.out.println("ret = " + ret);
+			//System.out.println("key = " + key + " length = " + key.length());
 		}
 	}
 	
@@ -116,11 +125,25 @@ public class Tree {
 		int ret;
 		String key;
 
-		System.out.println("Give me what you want to remove: ");
+		System.out.print("Give me what you want to remove: ");
 		key = sc.next();
 		
 		ret = tree.remove(key);
 		
 		System.out.println("Remotios was a "+ (ret == key.length()));
+	}
+	
+	private static void getSuggestions()
+	{
+		Scanner sc = new Scanner(System.in);
+		String key;
+		int n;
+		
+		System.out.print("Give me a key: ");
+		key = sc.next();
+		System.out.print("Now, give the number of words to find: ");
+		n = sc.nextInt();
+		
+		tree.getSuggestions(key, n);
 	}
 }
