@@ -386,7 +386,7 @@ public class TrieTree {
 			{
 				//Buffering the string
 				buff2.append(String.format("%c", 97 + i));
-				
+				//Print the string and break line
 				if(nos[i].isFinish())
 				{
 					System.out.println();
@@ -414,7 +414,6 @@ public class TrieTree {
 				buff.append(String.format("%c ", (i + 97)));
 			}
 		}
-		
 		return buff.toString();
 	}
 }
