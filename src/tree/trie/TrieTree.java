@@ -52,20 +52,12 @@ public class TrieTree {
 	}
 	
 	private TrieTree getNode(int i) {
-		/*if(nodes[i] == null)
-		{
-			//System.out.println("Creating a node int");
-			//nodes[i] = new TrieTree();
-		}*/
+
 		return nodes[i];
 	}
 	
 	private TrieTree getNode(char c) {
-		/*if(nodes[c -97] == null)
-		{
-			//System.out.println("Creating a node char");
-			//nodes[c - 97] = new TrieTree();
-		}*/
+
 		return nodes[c - 97];
 	}
 
@@ -111,11 +103,17 @@ public class TrieTree {
 	 */
 	private boolean hasMore()
 	{
+
+		return this.hasCildren() & finish;	
+	}
+	
+	private boolean hasCildren()
+	{
 		for(int i = 0; i < 26; i++)
 		{
 			if (this.nodes[i] != null)
 			{
-				return (true && finish);
+				return true;
 			}
 		}
 		return false;	
@@ -280,67 +278,51 @@ public class TrieTree {
 	 * Print the tree
 	 * @return a string with all words in the tree
 	 */
-	public String print()
+	public void print()
 	{
-		return print(this.root, new StringBuilder());
+		print(this.root, new StringBuilder());
 	}
 	
 	/**
 	 * print tree recursively
-	 * @param no a node to start printing
-	 * @return 
+	 * @param no a node to start printing 
 	 */
-	private String print(TrieTree no, StringBuilder buff)
+	private void print(TrieTree no, StringBuilder buff)
 	{
+		StringBuilder buff2 = new StringBuilder();
 		//Break condition
 		if(no == null)
 		{
-			return null;
+			return;
 		}
 		
 		TrieTree[] nos = no.getNodes();
 		
 		for(int i = 0; i < 26; i++)
 		{
+			//Initialize buff2 with the previous prefix
+			buff2.append(buff.toString());
 			if(nos[i] != null)
 			{
-				System.out.printf("%c", 97 + i);
-				
-				//Buff storage the prefix, then if a key is prefix of another 
-				//it is possible reprint this prefix
-				buff.append(String.format("%c", 97 + i));
+				//Buffering the string
+				buff2.append(String.format("%c", 97 + i));
 				
 				if(nos[i].isFinish())
-				{	
-					System.out.println("");
-					
-					//Verify if this final word is a prefix to another
-					TrieTree[] tmp = nos[i].getNodes();
-					boolean coisa = false;
-					
-					for(int j = 0; j < 26; j++)
-					{
-						if(tmp[j] != null)
-						{
-							coisa = true;
-							break;
-						}
-					}
-					if(coisa)
-					{
-						System.out.print(buff.toString());
-					}
+				{
+					System.out.println();
+					System.out.print(buff2.toString());
 				}
-				print(nos[i], buff);
+				this.print(nos[i], buff2);
 			}
+			//Cleaning buff2 of deeper prefix
+			buff2 = new StringBuilder();
 		}
-		
-		return null;
+		return;
 	}
 	
 	/**
 	 * Prints the node
-	 *
+	 */
 	public String toString()
 	{
 		StringBuilder buff = new StringBuilder();
@@ -354,24 +336,5 @@ public class TrieTree {
 		}
 		
 		return buff.toString();
-	}*/
-	
-	/**
-	 * A Wrapper to make possible to modify received pointers 
-	 * @author fenix
-	 *
-	 *
-	private class Wrapper{
-		public TrieTree no;
-		
-		public Wrapper(TrieTree no)
-		{
-			this.no = no;
-		}
-		
-		public void setNull()
-		{
-			no = null;
-		}
-	}*/
+	}
 }
