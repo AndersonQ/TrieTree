@@ -61,7 +61,7 @@ public class TrieTree {
 		{
 			if(this.nodes[goingToDie] == me)
 			{
-				//Killing the child *_*
+				//Killing the child
 				nodes[goingToDie] = null;
 				return;
 			}
