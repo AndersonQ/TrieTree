@@ -160,8 +160,8 @@ public class TrieTree {
 	 */
 	public Vector<String> getSuggestions(String prefix, int n)
 	{
-		search(prefix);
-		if(this.tmp == this.root)
+		int size = search(prefix);
+		if(size != prefix.length())
 		{
 			return new Vector<String>();
 		}
