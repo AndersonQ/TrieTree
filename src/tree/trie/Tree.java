@@ -42,6 +42,7 @@ public class Tree {
 			tree.insert(key);
 		}
 		tree.print();
+		System.out.println("\n");
 				
 		while(c)
 		{
@@ -49,7 +50,7 @@ public class Tree {
 			System.out.printf("0 - Add new key\n");
 			System.out.printf("1 - Search a key\n");
 			System.out.printf("2 - Remove\n");
-			System.out.printf("3 - Get words words with a prefix chosen\n");
+			System.out.printf("3 - Get words with a prefix chosen\n");
 			System.out.printf("4 - Print tree\n");
 			System.out.printf("5 - Exit\n");
 			System.out.printf("Option: ");
@@ -68,6 +69,7 @@ public class Tree {
 					break;
 				case 3:
 					getSuggestions();
+					break;
 				case 4:
 					tree.print();
 					System.out.println();
@@ -154,6 +156,7 @@ public class Tree {
 	{
 		Scanner sc = new Scanner(System.in);
 		String key;
+		Vector<String> words;
 		int n;
 		
 		System.out.print("Give me a key: ");
@@ -161,6 +164,15 @@ public class Tree {
 		System.out.print("Now, give the number of words to find: ");
 		n = sc.nextInt();
 		
-		tree.getSuggestions(key, n);
+		words = tree.getSuggestions(key, n);
+		
+		if(words.size() > 0)
+		{
+			System.out.println("Was found: " + words);
+		}
+		else
+		{
+			System.out.println("Impossible to find any words with prefix: " + key);
+		}
 	}
 }
