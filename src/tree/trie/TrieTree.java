@@ -161,7 +161,14 @@ public class TrieTree {
 	public Vector<String> getSuggestions(String prefix, int n)
 	{
 		search(prefix);
-		return this.getSuggestions(this.tmp, new StringBuilder(prefix), n, new Vector<String>());
+		if(this.tmp == this.root)
+		{
+			return new Vector<String>();
+		}
+		else
+		{
+			return this.getSuggestions(this.tmp, new StringBuilder(prefix), n, new Vector<String>());
+		}
 	}	
 	
 	/**
