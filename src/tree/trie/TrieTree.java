@@ -363,6 +363,7 @@ public class TrieTree {
 	 * Print the tree
 	 * @return a string with all words in the tree
 	 */
+	@SuppressWarnings("static-access")
 	public void print()
 	{
 		print(this.root, new StringBuilder());
@@ -404,6 +405,54 @@ public class TrieTree {
 		}
 		return;
 	}
+	
+	@SuppressWarnings("static-access")
+	public Vector<String> getAll()
+	{
+		Vector<String> str = new Vector<String>();
+		getAll(this.root, new StringBuilder(), str);
+		
+		return str;
+	}
+	
+	/**
+	 * print tree recursively
+	 * @param no a node to start printing 
+	 */
+	private void getAll(TrieTree no, StringBuilder buff, Vector<String> str)
+	{
+		StringBuilder buff2 = new StringBuilder();
+		//Break condition
+		if(no == null)
+		{
+			return;
+		}
+		
+		TrieTree[] nos = no.getNodes();
+		
+		for(int i = 0; i < 26; i++)
+		{
+			//Initialize buff2 with the previous prefix
+			buff2.append(buff.toString());
+			if(nos[i] != null)
+			{
+				//Buffering the string
+				buff2.append(String.format("%c", 97 + i));
+				//Print the string and break line
+				if(nos[i].isFinish())
+				{
+					//System.out.println();
+					//System.out.print(buff2.toString());
+					str.add(buff2.toString());
+				}
+				this.getAll(nos[i], buff2, str);
+			}
+			//Cleaning buff2 of deeper prefix
+			buff2 = new StringBuilder();
+		}
+		return;
+	}
+
 	
 	/**
 	 * Prints the node
